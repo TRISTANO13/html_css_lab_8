@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="css/style.css">
+  <title>Rocket League Cars</title>
+</head>
+
+<body>
+  <div id="app">
+    <h1 id="main-title">Rocket League Cars</h1> 
+    <div id="navigation">
+      <button v-on:click="previousItem">Previous</button>
+      <button v-on:click="nextItem">Next</button>
+    </div>
+    <button v-on:click="toggleDisplay">Switch display</button>
+    <h2 v-if="!showDescription">{{ currentItem.title }}</h2>
+    <p v-if="showDescription">{{ currentItem.desc }}</p>
+    <img v-bind:src="currentItem.img" alt="Image descriptive">
+  </div>
+  
+      
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+
+  <script src="data/data.js"></script>
+
+  <script>
+    new Vue({
+      el: '#app',
+      data: {
+        items: data,
+        currentIndex: 0,
+        showDescription: false // Commence par afficher le titre
+      },
+      computed: {
+        currentItem: function() {
+          return this.items[this.currentIndex];
+        }
+      },
+      methods: {
+        nextItem: function() {
+          this.currentIndex = (this.currentIndex + 1) % this.items.length;
+        },
+        previousItem: function() {
+          this.currentIndex = (this.currentIndex - 1 + this.items.length) % this.items.length;
+        },
+        toggleDisplay: function() {
+          this.showDescription = !this.showDescription;
+        }
+      }
+    });
+  </script>
+  
+</body>
+</html>
